@@ -1,3 +1,5 @@
+import './ipc'
+
 import path from 'node:path'
 
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
