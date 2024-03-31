@@ -1,17 +1,21 @@
+import * as Collapsible from '@radix-ui/react-collapsible'
 import clsx from 'clsx'
 import { CaretDoubleRight, Code, TrashSimple } from 'phosphor-react'
 
 import * as Breadcrumbs from './Breadcrumbs'
 
-export function Header() {
+interface HeaderProps {
+  isSidebarOpen: boolean
+}
+
+export function Header({ isSidebarOpen }: HeaderProps) {
   const isMacOS = process.platform === 'darwin'
-  const isSidebarOpen = true
 
   return (
     <div
       id="header"
       className={clsx(
-        'border-rotion-600 duration-250 region-drag flex items-center gap-4 border-b px-6 py-[1.125rem] leading-tight transition-all',
+        'duration-250 flex items-center gap-4 border-b border-rotion-600 px-6 py-[1.125rem] leading-tight transition-all region-drag',
         {
           'pl-24': !isSidebarOpen && isMacOS,
           'w-screen': !isSidebarOpen,
@@ -19,14 +23,14 @@ export function Header() {
         },
       )}
     >
-      <button
-        className={clsx('text-rotion-200 hover:text-rotion-50 h-5 w-5', {
+      <Collapsible.Trigger
+        className={clsx('h-5 w-5 text-rotion-200 hover:text-rotion-50', {
           hidden: isSidebarOpen,
           block: !isSidebarOpen,
         })}
       >
         <CaretDoubleRight className="h-4 w-4" />
-      </button>
+      </Collapsible.Trigger>
 
       <>
         <Breadcrumbs.Root>
@@ -42,8 +46,8 @@ export function Header() {
           <Breadcrumbs.Item isActive>Untitled</Breadcrumbs.Item>
         </Breadcrumbs.Root>
 
-        <div className="region-no-drag inline-flex">
-          <button className="text-rotion-100 hover:text-rotion-50 inline-flex items-center gap-1 text-sm">
+        <div className="inline-flex region-no-drag">
+          <button className="inline-flex items-center gap-1 text-sm text-rotion-100 hover:text-rotion-50">
             <TrashSimple className="h-4 w-4" />
             Apagar
           </button>

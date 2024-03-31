@@ -1,3 +1,4 @@
+import * as Collapsible from '@radix-ui/react-collapsible'
 import clsx from 'clsx'
 import { CaretDoubleLeft } from 'phosphor-react'
 
@@ -10,10 +11,10 @@ export function Sidebar() {
   const isMacOS = process.platform === 'darwin'
 
   return (
-    <aside className="bg-rotion-800 border-rotion-600 data-[state=open]:animate-slideIn data-[state=closed]:animate-slideOut group relative h-screen flex-shrink-0 overflow-hidden border-r">
-      <button
+    <Collapsible.Content className="data-[state=open]:animate-slideIn data-[state=closed]:animate-slideOut group relative h-screen flex-shrink-0 overflow-hidden border-r border-rotion-600 bg-rotion-800">
+      <Collapsible.Trigger
         className={clsx(
-          'text-rotion-200 hover:text-rotion-50 absolute right-4 inline-flex h-5 w-5 items-center justify-center',
+          'absolute right-4 inline-flex h-5 w-5 items-center justify-center text-rotion-200 hover:text-rotion-50',
           {
             'top-[1.125rem]': isMacOS,
             'top-6': !isMacOS,
@@ -21,10 +22,10 @@ export function Sidebar() {
         )}
       >
         <CaretDoubleLeft className="h-4 w-4" />
-      </button>
+      </Collapsible.Trigger>
 
       <div
-        className={clsx('region-drag h-14', {
+        className={clsx('h-14 region-drag', {
           block: isMacOS,
           hidden: !isMacOS,
         })}
@@ -55,6 +56,6 @@ export function Sidebar() {
 
         <CreatePage />
       </div>
-    </aside>
+    </Collapsible.Content>
   )
 }
