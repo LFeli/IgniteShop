@@ -1,7 +1,9 @@
 import * as Collapsible from '@radix-ui/react-collapsible'
+import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { CaretDoubleLeft } from 'phosphor-react'
 
+import { getDocuments } from '../../api/get-documents'
 import { CreatePage } from './CreatePage'
 import * as Navigation from './Navigation'
 import { Profile } from './Profile'
@@ -10,10 +12,13 @@ import { Search } from './Search'
 export function Sidebar() {
   const isMacOS = process.platform === 'darwin'
 
-  const response = window.api.fetchDocuments('Testeeee').then(console.log)
+  const { data: documents } = useQuery({
+    queryKey: ['documents'],
+    queryFn: getDocuments,
+  })
 
   return (
-    <Collapsible.Content className="data-[state=open]:animate-slideIn data-[state=closed]:animate-slideOut group relative h-screen flex-shrink-0 overflow-hidden border-r border-rotion-600 bg-rotion-800">
+    <Collapsible.Content className="group relative h-screen flex-shrink-0 overflow-hidden border-r border-rotion-600 bg-rotion-800 data-[state=closed]:animate-slideOut data-[state=open]:animate-slideIn">
       <Collapsible.Trigger
         className={clsx(
           'absolute right-4 inline-flex h-5 w-5 items-center justify-center text-rotion-200 hover:text-rotion-50',
@@ -48,10 +53,13 @@ export function Sidebar() {
           <Navigation.Section>
             <Navigation.SectionTitle>Workspace</Navigation.SectionTitle>
             <Navigation.SectionContent>
-              <Navigation.Link>Untitled</Navigation.Link>
-              <Navigation.Link>Discover</Navigation.Link>
-              <Navigation.Link>Ignite</Navigation.Link>
-              <Navigation.Link>Rocketseat</Navigation.Link>
+              {documents?.map((document) => {
+                return (
+                  <Navigation.Link key={document.id}>
+                    {document.title}
+                  </Navigation.Link>
+                )
+              })}
             </Navigation.SectionContent>
           </Navigation.Section>
         </Navigation.Root>
