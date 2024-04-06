@@ -1,4 +1,5 @@
 import './ipc'
+import './store'
 
 import path from 'node:path'
 
