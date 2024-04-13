@@ -8,6 +8,7 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
 
 import icon from '../../resources/icon.png'
+import { createShortcuts } from './shortcuts'
 import { createTray } from './tray'
 
 function createWindow(): void {
@@ -30,6 +31,7 @@ function createWindow(): void {
   })
 
   createTray(mainWindow)
+  createShortcuts(mainWindow)
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
