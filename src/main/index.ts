@@ -8,6 +8,7 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
 
 import icon from '../../resources/icon.png'
+import { createTray } from './tray'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -27,6 +28,8 @@ function createWindow(): void {
       sandbox: false,
     },
   })
+
+  createTray(mainWindow)
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
